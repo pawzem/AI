@@ -10,7 +10,7 @@ feature-stormer/<feature-slug>/
   diagrams/            ← per-process .mmd + joined.mmd; SVGs land here too if needed (Stage 7)
 ```
 
-The draft `analysis.md` is one growing document, not many files. At Stage 11 it is replaced by a single consolidated spec and the working folder is deleted (confirm first).
+The draft `analysis.md` is one growing document, not many files — written/updated on disk at each stage for *optional* review, while the actual review and gate happen in the terminal. At Stage 11, after the user approves the final version in the terminal, it is replaced by a single consolidated spec and the working folder is deleted (confirm first).
 
 ## Gap categories (Stage 3)
 

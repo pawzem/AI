@@ -13,7 +13,7 @@ This is a deliberate, multi-turn collaboration, not a one-shot generator. Going 
 
 - **Human-gated.** Each stage ends at a checkpoint. Do not advance to the next stage until the user explicitly approves. State the gate; wait.
 - **Ask, don't decide.** When you hit ambiguity, a missing acceptance criterion, an unclear boundary, or a design fork — surface it as a question. Never silently resolve it and move on. The user's domain knowledge is the input you cannot derive from code.
-- **Drafts hold artifacts; the conversation holds decisions.** Write analysis, diagrams, and plans to draft files so the user can read them. But every question and every checkpoint also happens **in the terminal** — summarize what you produced and ask the open questions in chat. Never bury a question where the user must open a file to find it.
+- **Drafts hold artifacts; the terminal holds the review.** Persist every stage's output to its draft file as you produce it, so the user *can* open it on disk if they want — but **on-disk review is optional**. The **main review and every gate happen in the terminal**: summarize what you produced and ask the open questions in chat. Never make the user open a file to find a question or to approve a stage, and never block waiting for them to read the draft — drive the checkpoint from the conversation.
 - **Domain language, not code.** Events, commands, and policies use the business's ubiquitous language ("booking confirmed"), never code identifiers (`BookingEntity.save()`).
 - **Re-validate after every change.** Any edit to a diagram → re-run the event-storming self-review checklist before showing it. The grammar is easy to break with a one-line edit.
 - **Simplest thing that fits.** Prefer reuse and the least machinery that satisfies the present need. Every proposed abstraction or generalization gets an explicit verdict (adopt now / defer / reject) — speculative reuse is a cost, not a win.
@@ -54,8 +54,8 @@ Most questions here are open-ended (domain judgement, trade-offs) — ask them a
 
 ## Working files & final output
 
-- All interim artifacts live in the one working folder. The draft analysis grows in place across stages (it accretes the diagrams and then the plan).
-- At Stage 11 the drafts are **dropped** in favour of a single consolidated file. The pipeline's value is the gated conversation; the repo should be left with one clean spec, not a trail of scratch files.
+- All interim artifacts live in the one working folder. **Each stage's output is saved to disk as it's produced** (the draft analysis grows in place — it accretes the diagrams, then the plan), so there is always a current draft available for *optional* on-disk review.
+- At Stage 11, once the final version is approved **in the terminal**, the drafts are **deleted** in favour of a single consolidated file (confirm before deleting). The pipeline's value is the gated conversation; the repo should be left with one clean spec, not a trail of scratch files.
 
 ## References
 
