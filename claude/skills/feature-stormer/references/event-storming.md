@@ -123,7 +123,16 @@ When modelling a process (and the software underneath), respect these four rules
 - **Temporal milestones** — for season/big-bang-driven domains, lay blue time markers across the timeline.
 - **Mark uncertainty as a hotspot** rather than guessing.
 
-## Self-review checklist (run BEFORE showing the user)
+## Verification is two-way
+
+A storming is verified **twice** before the user accepts it, and you run *both* passes every time you present a diagram for review:
+
+- **Pass 1 — on your own** (the self-review checklist below): silently check colour-grammar and adjacency correctness *before* showing anything.
+- **Pass 2 — with the user** (the interactive walkthrough that follows): actively **conduct** the verification together — read flows aloud forward and backward, ask about pivotal events, hotspots, and gaps. Never a passive "does this look right?".
+
+Neither pass replaces the other: yours catches grammar errors; theirs catches wrong or missing domain truth.
+
+## Self-review checklist — Pass 1, on your own (run BEFORE showing the user)
 
 After producing or editing any diagram, verify — and fix — before presenting. Re-run this **every** time the diagram changes:
 
@@ -139,9 +148,9 @@ After producing or editing any diagram, verify — and fix — before presenting
 
 Only after this passes do you show the diagram and ask the user to validate.
 
-## Validation with the user (Stage 8)
+## Validation with the user — Pass 2, interactive (Stage 8)
 
-Drive the validation actively — don't just ask "looks right?":
+This is the second verification pass: **conduct** it interactively, never a passive "looks right?". Walk the diagram *with* the user — read flows, ask about pivotal events, address hotspots:
 
 - **Explicit walkthrough, three roles.** You *tell the story* (as the naive narrator — being wrong is useful, it makes experts correct you), the user *validates* it, and you *keep the model in sync* (add events, split lanes, rewrite) as you learn.
 - **Forward narrative.** Read the timeline left-to-right as plain English. Where does the user hesitate?
