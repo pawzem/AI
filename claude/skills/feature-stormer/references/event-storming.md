@@ -11,12 +11,12 @@ One shape = one meaning. A misused color is a modeling error, not cosmetic. Repr
 ```
     classDef event          fill:#FFA94D,stroke:#CC7722,color:#000
     classDef command        fill:#4D9FEC,stroke:#2C6FB0,color:#000
-    classDef constraint      fill:#FFE066,stroke:#B89A1A,color:#000
-    classDef actor          fill:#FFD1DC,stroke:#C96B8A,color:#000
+    classDef actor          fill:#FFE066,stroke:#B89A1A,color:#000
+    classDef constraint     fill:#FFF3BF,stroke:#D6C34A,color:#000
     classDef policy         fill:#C69AE0,stroke:#7E3FBF,color:#000
     classDef readModel      fill:#9CD97A,stroke:#3F8C2B,color:#000
-    classDef externalSystem fill:#E94196,stroke:#A11060,color:#FFF
-    classDef hotspot        fill:#FF6B6B,stroke:#B03030,color:#000
+    classDef externalSystem fill:#FFC2D1,stroke:#D24B6E,color:#000
+    classDef hotspot        fill:#E64980,stroke:#A61E4D,color:#FFF
     classDef opportunity    fill:#69DB7C,stroke:#2F9E44,color:#000
 ```
 
@@ -24,13 +24,15 @@ One shape = one meaning. A misused color is a modeling error, not cosmetic. Repr
 |---|---|---|---|
 | **Domain event** | orange | a fact that happened, relevant to domain experts | **past tense**: "invoice accepted for processing" |
 | **Command / action** | blue | a decision, action, or intent | **imperative**: "send invoice" |
-| **Constraint** (consistent business rule) | yellow | the rule(s) that decide whether the command yields the event | **a list of conditions** — see below |
-| **Actor / person** | pink | who issues the command (Brandolini prefers the fuzzy "people": role, segment, or named person) | a role noun: "booker", "accountant" |
-| **Policy** | purple | reactive logic — "whenever X, we do Y" | **starts with "whenever…"** |
+| **Actor / person** | **yellow** | who issues the command (Brandolini prefers the fuzzy "people": role, segment, or named person) | a role noun: "booker", "accountant" |
+| **Constraint** (consistent business rule) | **pale yellow** | the rule(s) that decide whether the command yields the event | **a list of conditions** — see below |
+| **Policy** | purple (lilac) | reactive logic — "whenever X, we do Y" | **starts with "whenever…"** |
 | **Read model** | green | the information needed to take a decision | a question/info: "is there a slot?" |
-| **External system** | magenta | a system outside your control ("whatever you can put the blame on") | a system noun: "Payments" |
-| **Hotspot** | red | an open question, conflict, risk, or assumption | the question itself |
+| **External system** | pink | a system outside your control ("whatever you can put the blame on") | a system noun: "Payments" |
+| **Hotspot** | neon pink | an open question, conflict, risk, or assumption | the question itself |
 | **Opportunity** | bright green | an idea / good thing to pursue (value exploration) | the idea |
+
+Note the two yellows (Brandolini's "small yellow person" vs the consistency sticky) and the two pinks (a pale **pink** external system vs the **neon pink** hotspot) — keep them distinct.
 
 A **temporal trigger** is an event tagged `(temporal)` — "month-end reached (temporal)" — usually feeding a policy. Optional: a pale-yellow **Definition** sticky clarifies a term (non-controversial, unlike a hotspot) — but don't define everything; that turns the session into database design in disguise.
 
@@ -58,8 +60,8 @@ The colors connect in a fixed grammar — "the picture that explains everything.
 
 | From → To | Meaning |
 |---|---|
-| Actor → Command | people decide to issue commands |
-| Read model → Command | information feeds the decision |
+| Read model → Actor | the information is shown to the person who decides |
+| Actor → Command | the person decides to issue a command (read model in hand) |
 | Command → Constraint | the command is checked against the business rule |
 | Command → External system | a command can be handed to an external system |
 | Constraint → Event | if the rule holds, the event is emitted |
@@ -74,7 +76,7 @@ The colors connect in a fixed grammar — "the picture that explains everything.
 
 - **Event → Command directly.** Forbidden. *"There has to be a lilac between the orange and the blue"* — a reaction is always mediated by a **Policy**. If you drew event→command, you're hiding a policy; name it.
 - **Command → Event directly.** Forbidden — a command must pass through a **Constraint** (or an external system) that decides the outcome. A direct command→event hides the business rule.
-- **Read model → External system.** Forbidden — a read model only *informs a decision* (a command); it never drives a system.
+- **Read model → External system**, and **Read model → Command when a person decides.** A read model *informs the actor*, who then issues the command — **Read model → Actor → Command**. It never drives a system. Only when the decision is fully automated (no human actor) may a read model feed the command (or its policy) directly.
 - **Read model → Event**, **Actor → Event**, **Policy → Event**, **Constraint → Command** — all forbidden; they break the sentence.
 - An external system's effect **re-enters your model as an Event** (then a Policy may react) — it does not directly issue domain commands.
 
@@ -125,7 +127,7 @@ When modelling a process (and the software underneath), respect these four rules
 
 After producing or editing any diagram, verify — and fix — before presenting. Re-run this **every** time the diagram changes:
 
-1. **Color grammar — adjacencies.** Every edge is in the legal table; no event→command, command→event, or read-model→external-system; a lilac sits between every orange→blue reaction.
+1. **Color grammar — adjacencies.** Every edge is in the legal table; read models feed the **actor** (Read model → Actor → Command), not the command, wherever a person decides; no event→command, command→event, or read-model→external-system; a lilac sits between every orange→blue reaction.
 2. **Tense/voice.** Events past tense; commands imperative; policies "whenever…".
 3. **Constraints.** Yellow stickies list conditions (not aggregate nouns); failure/rejection events modeled where a constraint can fail.
 4. **Causality.** Every event has a cause (constraint / external system / temporal); every command a trigger (actor / policy / time). No orphans except marked hotspots.
@@ -146,6 +148,6 @@ Drive the validation actively — don't just ask "looks right?":
 - **Reverse narrative** (the most powerful consistency check). Pick a terminal or pivotal event and walk backward: *"which events need to happen for this one to be possible?"* This reliably surfaces forgotten preconditions and unexplored alternatives ("this needs to happen here — but what if it doesn't?").
 - **Pivotal events.** Confirm the 3–4 events that change the process's phase.
 - **Hotspots — address every one.** For each red sticky: raise it, propose a concrete resolution (or two options), let the user choose. Resolving a hotspot edits the diagram → re-run the self-review checklist.
-- **Value & opportunities.** Ask *why* each actor does what they do and whether they're reasonably happy (money isn't the only currency — time, stress, trust count). Mark opportunities (green) and problems (red). Challenge policies by repeating them with **"always"** and **"immediately"** and watching the expert auto-correct.
+- **Value & opportunities.** Ask *why* each actor does what they do and whether they're reasonably happy (money isn't the only currency — time, stress, trust count). Mark opportunities (green) and problems (magenta). Challenge policies by repeating them with **"always"** and **"immediately"** and watching the expert auto-correct.
 
 Treat acceptance as explicit: the user confirms the storming reflects the real process before you move to the implementation plan.

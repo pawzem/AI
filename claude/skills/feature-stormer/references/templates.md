@@ -57,12 +57,12 @@ Always lead with the palette `classDef` block from `event-storming.md`. Give eve
 flowchart TB
     classDef event          fill:#FFA94D,stroke:#CC7722,color:#000
     classDef command        fill:#4D9FEC,stroke:#2C6FB0,color:#000
-    classDef constraint     fill:#FFE066,stroke:#B89A1A,color:#000
-    classDef actor          fill:#FFD1DC,stroke:#C96B8A,color:#000
+    classDef actor          fill:#FFE066,stroke:#B89A1A,color:#000
+    classDef constraint     fill:#FFF3BF,stroke:#D6C34A,color:#000
     classDef policy         fill:#C69AE0,stroke:#7E3FBF,color:#000
     classDef readModel      fill:#9CD97A,stroke:#3F8C2B,color:#000
-    classDef externalSystem fill:#E94196,stroke:#A11060,color:#FFF
-    classDef hotspot        fill:#FF6B6B,stroke:#B03030,color:#000
+    classDef externalSystem fill:#FFC2D1,stroke:#D24B6E,color:#000
+    classDef hotspot        fill:#E64980,stroke:#A61E4D,color:#FFF
 
     subgraph BOOKING[booking]
       BK_Booker["booker"]:::actor
@@ -72,8 +72,7 @@ flowchart TB
       BK_RMSlot["is there a slot?"]:::readModel
       BK_HSDouble["double-booking under concurrency?"]:::hotspot
 
-      BK_Booker --> BK_CmdConfirm --> BK_Constraint --> BK_EvConfirmed
-      BK_RMSlot --> BK_CmdConfirm
+      BK_RMSlot --> BK_Booker --> BK_CmdConfirm --> BK_Constraint --> BK_EvConfirmed
     end
 ```
 
@@ -90,7 +89,7 @@ flowchart TB
     BK_EvConfirmed -.-> R_PolSchedule
 ```
 
-Conventions: solid arrows inside a process (the legal grammar chain `actor→command→constraint→event` and `event→policy→command`); dotted arrows across processes. Never draw event→command or command→event directly (see the adjacency rules in `event-storming.md`). Prefix node ids per process (`BK_`, `R_`, …) to keep them unique in the joined view.
+Conventions: solid arrows inside a process (the legal grammar chain `read-model→actor→command→constraint→event` and `event→policy→command`); dotted arrows across processes. A read model feeds the **actor** who decides, not the command (unless the decision is automated, with no human actor). Never draw event→command or command→event directly (see the adjacency rules in `event-storming.md`). Prefix node ids per process (`BK_`, `R_`, …) to keep them unique in the joined view.
 
 ## SVG rendering (Stage 7)
 
