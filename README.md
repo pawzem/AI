@@ -79,3 +79,9 @@ Skills such as `code-review`, `deep-research`, `verify`, `simplify`, `loop`,
 `update-config`, `keybindings-help`, and `fewer-permission-prompts` ship **inside
 Claude Code**. They're already available everywhere and have no source to copy —
 don't recreate them here. This library is for **your own** skills/agents.
+
+## License
+
+[MIT](LICENSE) © 2026 Paweł Zemla. Use it for anything — personal or
+commercial — modify and redistribute freely; just keep the copyright notice.
+Provided **as is**, with no warranty and no liability.
